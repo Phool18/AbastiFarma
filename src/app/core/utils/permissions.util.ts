@@ -25,12 +25,10 @@ export function canApproveSolicitud(
   user: UsuarioSesion | null,
   solicitud: SolicitudReposicion | SolicitudReposicionDetalle | null
 ): boolean {
-  // Se reutiliza el mismo criterio de acciones rapidas del modulo operativo
-  // para no duplicar reglas mientras negocio termina de separar permisos finos.
   return (
     !!user &&
     !!solicitud &&
-    (user.rol === 'OPERACIONES' || user.rol === 'ALMACEN') &&
+    user.rol === 'OPERACIONES' &&
     solicitud.estado === 'REGISTRADA'
   );
 }
@@ -46,13 +44,11 @@ export function canAttendSolicitud(
   user: UsuarioSesion | null,
   solicitud: SolicitudReposicion | SolicitudReposicionDetalle | null
 ): boolean {
-  // Pendiente alinear esta transicion con el flujo final cuando operaciones
-  // confirme si los rechazos quedan disponibles solo para auditoria.
   return (
     !!user &&
     !!solicitud &&
     user.rol === 'ALMACEN' &&
-    (solicitud.estado === 'APROBADA' || solicitud.estado === 'RECHAZADA')
+    solicitud.estado === 'APROBADA'
   );
 }
 
@@ -65,10 +61,6 @@ export function isValidStatusTransition(
   }
 
   if (currentStatus === 'APROBADA') {
-    return nextStatus === 'ATENDIDA';
-  }
-
-  if (currentStatus === 'RECHAZADA') {
     return nextStatus === 'ATENDIDA';
   }
 

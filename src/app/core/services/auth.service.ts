@@ -56,12 +56,7 @@ export class AuthService {
   }
 
   hasAnyRole(roles: string[]): boolean {
-    // BOTICA mantiene acceso de consulta en flujos donde el modulo todavia no
-    // distingue del todo entre lectura y accion.
-    return (
-      !!this.currentUser &&
-      (roles.includes(this.currentUser.rol) || this.currentUser.rol === 'BOTICA')
-    );
+    return !!this.currentUser && roles.includes(this.currentUser.rol);
   }
 
   private toSessionUser(user: Usuario): UsuarioSesion {

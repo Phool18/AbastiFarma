@@ -165,9 +165,9 @@ export class SolicitudesListPageComponent implements OnInit {
   private readFiltersFromQuery(params: { get: (name: string) => string | null }): SolicitudFiltros {
     return {
       estado: (params.get('estado') as EstadoSolicitud | null) ?? '',
-      prioridad: (params.get('priority') as PrioridadSolicitud | null) ?? '',
+      prioridad: (params.get('prioridad') as PrioridadSolicitud | null) ?? '',
       sedeId: params.get('sedeId') ? Number(params.get('sedeId')) : null,
-      texto: params.get('q') ?? ''
+      texto: params.get('texto') ?? ''
     };
   }
 }
